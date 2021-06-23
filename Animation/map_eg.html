@@ -1,0 +1,202 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Environmenatl Goods Map</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.19/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script>
+      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Legend"], function(
+        Map,
+        MapView,
+        FeatureLayer,
+        Legend
+      ) {
+        /*****************************************************************
+         * Define symbols for each class break.
+         *****************************************************************/
+
+        const more2 = {
+          type: "simple-fill", // autocasts as new SimpleFillSymbol()
+          color: "#38a800",
+          style: "solid",
+          outline: {
+            width: 0.2,
+            color: [255, 255, 255, 0.5]
+          }
+        };
+
+        const less2 = {
+          type: "simple-fill", // autocasts as new SimpleFillSymbol()
+          color: "#78be1f",
+          style: "solid",
+          outline: {
+            width: 0.2,
+            color: [255, 255, 255, 0.5]
+          }
+        };
+
+        const less12 = {
+          type: "simple-fill", // autocasts as new SimpleFillSymbol()
+          color: "#a7d967",
+          style: "solid",
+          outline: {
+            width: 0.2,
+            color: [255, 255, 255, 0.5]
+          }
+        };
+
+        const less1 = {
+          type: "simple-fill", // autocasts as new SimpleFillSymbol()
+          color: "#d9a183",
+          style: "solid",
+          outline: {
+            width: 0.2,
+            color: [255, 255, 255, 0.5]
+          }
+        };
+
+        const less05 = {
+          type: "simple-fill", // autocasts as new SimpleFillSymbol()
+          color: "#de814f",
+          style: "solid",
+          outline: {
+            width: 0.2,
+            color: [255, 255, 255, 0.5]
+          }
+        };
+
+        const less02 = {
+          type: "simple-fill", // autocasts as new SimpleFillSymbol()
+          color: "#e35203",
+          style: "solid",
+          outline: {
+            width: 0.2,
+            color: [255, 255, 255, 0.5]
+          }
+        };
+
+        /*****************************************************************
+         * Set each unique value directly in the renderer's constructor.
+         * At least one field must be used (in this case the "COL_DEG" field).
+         * The label property of each unique value will be used to indicate
+         * the field value and symbol in the legend.
+         *****************************************************************/
+
+        const renderer = {
+          type: "class-breaks", // autocasts as new ClassBreaksRenderer()
+          field: "F2019",
+          //normalizationField: "EDUCBASECY",
+          legendOptions: {
+            title: "Comparative advantage in Environmental Goods"
+          },
+          defaultSymbol: {
+            type: "simple-fill", // autocasts as new SimpleFillSymbol()
+            color: "black",
+            style: "backward-diagonal",
+            outline: {
+              width: 0.5,
+              color: [50, 50, 50, 0.6]
+            }
+          },
+          defaultLabel: "no data",
+          classBreakInfos: [
+            {
+              minValue: 0,
+              maxValue: 0.2,
+              symbol: less02,
+              label: "< 0.2"
+            },
+            {
+              minValue: 0.200001,
+              maxValue: 0.5,
+              symbol: less05,
+              label: "> 0.2 - 0.5"
+            },
+            {
+              minValue: 0.500001,
+              maxValue: 1,
+              symbol: less1,
+              label: "> 0.5 - 1"
+            },
+            {
+              minValue: 1.00001,
+              maxValue: 1.2,
+              symbol: less12,
+              label: "> 1 - 1.2"
+            },
+            {
+              minValue: 1.200001,
+              maxValue: 2,
+              symbol: less2,
+              label: "> 1.2 - 2"
+            },
+            {
+              minValue: 2.00001,
+              maxValue: 10,
+              symbol: more2,
+              label: "> 2"
+            }
+          ]
+        };
+
+        const egLayer = new FeatureLayer({
+          url:
+            "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/EG_Time_FL/FeatureServer/0",
+          title: "Environmental Goods",
+          renderer: renderer,
+          popupTemplate: {
+            // autocast as esri/PopupTemplate
+            title: "{Country}",
+            content:
+              "{Indicator} for 2019: {F2019}"
+          },
+          // show only block groups in Seattle
+          //definitionExpression: "City = 'Seattle' AND EDUCBASECY > 0",
+          opacity: 0.9
+        });
+
+        const map = new Map({
+          basemap: "gray-vector",
+          layers: [seattleLayer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [-31.582879, 19.311143],
+          zoom: 3
+        });
+
+        /******************************************************************
+         *
+         * Add layers to layerInfos on the legend
+         *
+         ******************************************************************/
+
+        const legend = new Legend({
+          view: view
+        });
+
+        view.ui.add(legend, "bottom-left");
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

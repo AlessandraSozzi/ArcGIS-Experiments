@@ -1,0 +1,176 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>ArcGIS API for JavaScript</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #info {
+        background-color: black;
+        opacity: 0.75;
+        color: orange;
+        font-size: 18pt;
+        padding: 8px;
+        visibility: hidden;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.18/"></script>
+
+    <script>
+
+      require(["esri/Map", "esri/views/SceneView", "esri/layers/FeatureLayer"], function(Map, SceneView, FeatureLayer) {
+
+        function addCommas(num) {
+          return String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        }
+
+        const countries = new FeatureLayer({
+          //url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/1",
+          url: "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/IMF_Country_Boundaries/FeatureServer/0",
+          elevationInfo: { mode: "absolute-height" },
+          outFields: ["*"],
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "polygon-3d", // autocasts as new PolygonSymbol3D()
+              symbolLayers: [
+                {
+                  type: "fill", // autocasts as new FillSymbol3DLayer()
+                  material: {
+                    color: [0, 0, 0, 0]
+                  },
+                  outline: {
+                    color: [4, 245, 248]
+                  }
+                }
+              ]
+            }
+          }
+        });
+
+        const map = new Map({
+          layers: [countries],
+          ground: {
+            opacity: 0.6,
+            surfaceColor: "black"
+          }
+        });
+
+        const view = new SceneView({
+          container: "viewDiv",
+          map: map,
+          center: [-61.125537, 35.863534],
+          environment: {
+            starsEnabled: true,
+            atmosphereEnabled: false,
+            background: {
+              type: "color",
+              color: "black"
+            }
+          },
+          zoom: 3,
+          highlightOptions: {
+            color: [4, 245, 248, 1],
+            haloOpacity: 0.4,
+            fillOpacity: 0.5
+          }
+        });
+
+        view.ui.add("info", "top-right");
+
+        view
+          .when()
+          .then(function() {
+            return countries.when();
+          })
+          .then(function(layer) {
+            return view.whenLayerView(layer);
+          })
+          .then(function(layerView) {
+            view.on("pointer-move", eventHandler);
+            view.on("pointer-down", eventHandler);
+
+            function eventHandler(event) {
+              // only include graphics from countries in the hitTest
+              const opts = {
+                include: countries
+              }
+              // the hitTest() checks to see if any graphics from the countries
+              // intersect the x, y coordinates of the pointer
+              view.hitTest(event, opts).then(getGraphics);
+            }
+
+            let highlight, currentName;
+
+            function getGraphics(response) {
+              // the topmost graphic from the countries
+              // and display select attribute values from the
+              // graphic to the user
+              if (response.results.length) {
+                const graphic = response.results[0].graphic;
+
+                const attributes = graphic.attributes;
+                const name = attributes.IMF_Name;
+                console.log("pointer-move event on path ", name);
+
+
+                if (
+                  highlight &&
+                  (currentName !== name)
+                ) {
+                  highlight.remove();
+                  highlight = null;
+                  return;
+                }
+
+                if (highlight) {
+                  return;
+                }
+
+                document.getElementById("info").style.visibility = "visible";
+                document.getElementById("name").innerHTML = name;
+
+                // highlight all features belonging to the same hurricane as the feature
+                // returned from the hitTest
+                const query = layerView.createQuery();
+                query.where = "IMF_Name = '" + name + "'";
+                layerView.queryObjectIds(query).then(function(ids) {
+                  if (highlight) {
+                    highlight.remove()
+                  }
+                  highlight = layerView.highlight(ids);
+                  currentName = name;
+                });
+              } else {
+                // remove the highlight if no features are
+                // returned from the hitTest
+                if (highlight){
+                  highlight.remove();
+                  highlight = null;
+                }
+                document.getElementById("info").style.visibility = "hidden";
+              }
+            }
+          });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <div id="info">
+      <span id="name"></span> <br />
+    </div>
+  </body>
+</html>

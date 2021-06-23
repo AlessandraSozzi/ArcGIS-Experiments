@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Intro to FeatureLayer | Sample | ArcGIS API for JavaScript 4.19</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
+
+
+    <style>
+      #chart { height: 800px; width: 800px; }
+    </style>
+
+
+
+
+
+  <!-- load the amCharts base library -->
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <!-- in this case, we only need bar charts, so we'll load the appropriate amCharts script -->
+  <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+  <!-- load the arcgis-rest-js scripts -->
+  <script src="https://unpkg.com/@esri/arcgis-rest-request@1.7.1/dist/umd/request.umd.min.js"></script>
+  <script src="https://unpkg.com/@esri/arcgis-rest-feature-service@1.7.1/dist/umd/feature-service.umd.min.js"></script>
+  <!-- optionally load an amcharts theme; cedar provides a calcite theme -->
+  <script src="https://unpkg.com/@esri/cedar/dist/umd/themes/amCharts/calcite.js"></script>
+  <!-- load cedar -->
+  <script src="https://unpkg.com/@esri/cedar/dist/umd/cedar.js"></script>
+  <!-- for scatter and bubble charts -->
+  <script src="https://www.amcharts.com/lib/3/xy.js"></script>
+  <script src="https://js.arcgis.com/4.19/"></script>
+
+
+
+    <script>
+
+      // connect to the data
+      var datasets = [{
+        "url": "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Indicator_12_dashboard/FeatureServer/0",
+      }];
+
+      console.log(datasets);
+
+      // designate a one or more series to show the data on the chart
+      var series = [{
+        "category": {"field": "Resilience", "label": "Resilience"},
+        "value": {"field": "Exposure", "label": "Exposure"}
+      }];
+
+      console.log(series);
+
+      // optionally override any of the cart type's default styles
+      var overrides = {
+        "precision": 2
+      }
+
+
+      //create a cedar chart using the known 'bar' type
+      var elementId = 'chart';
+      console.log(elementId);
+      var chart = new cedar.Chart(elementId,
+        {
+          "type": "scatter",
+          "trendLines": [
+        		{
+        			"initialValue": 0.1,
+        			"initialXValue": 0.1,
+        			"finalValue": 0.9,
+        			"finalXValue": 0.9
+        		}
+        	]
+    })
+
+        .datasets(datasets)
+        .series(series)
+        .overrides(overrides);
+
+      // render the chart
+      chart.show();
+
+
+
+    </script>
+
+        </head>
+
+  <body>
+
+
+
+  <div id="chart" style="height: 800px;"></div>
+
+  </body>
+</html>

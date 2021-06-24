@@ -98,20 +98,20 @@
 
         const renderer = {
           type: "class-breaks", // autocasts as new ClassBreaksRenderer()
-          field: "F2019",
+          field: "F2018",
           //normalizationField: "EDUCBASECY",
-          legendOptions: {
-            title: "Comparative advantage in Environmental Goods"
-          },
-          defaultSymbol: {
-            type: "simple-fill", // autocasts as new SimpleFillSymbol()
-            color: "black",
-            style: "backward-diagonal",
-            outline: {
-              width: 0.5,
-              color: [50, 50, 50, 0.6]
-            }
-          },
+          // legendOptions: {
+          //   title: "Comparative advantage in Environmental Goods"
+          // },
+          // defaultSymbol: {
+          //   type: "simple-fill", // autocasts as new SimpleFillSymbol()
+          //   //color: "black",
+          //   //style: "backward-diagonal",
+          //   outline: {
+          //     width: 0.5,
+          //     color: [50, 50, 50, 0.6]
+          //   }
+          // },
           defaultLabel: "no data",
           classBreakInfos: [
             {
@@ -156,13 +156,13 @@
         const egLayer = new FeatureLayer({
           url:
             "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/EG_Time_FL/FeatureServer/0",
-          title: "Environmental Goods",
+          title: "Comparative advantage in Environmental Goods",
           renderer: renderer,
           popupTemplate: {
             // autocast as esri/PopupTemplate
             title: "{Country}",
             content:
-              "{Indicator} for 2019: {F2019}"
+              "2018: {F2018}"
           },
           // show only block groups in Seattle
           //definitionExpression: "City = 'Seattle' AND EDUCBASECY > 0",
@@ -171,7 +171,7 @@
 
         const map = new Map({
           basemap: "gray-vector",
-          layers: [seattleLayer]
+          layers: [egLayer]
         });
 
         const view = new MapView({

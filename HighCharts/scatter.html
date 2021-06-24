@@ -84,7 +84,7 @@
             endOnTick: true,
             min: 0,
             max: 1.01,
-            showLastLabel: false,    
+            showLastLabel: false,
             gridLineWidth: 1,
             title: {
                 text: 'Resilience'
@@ -144,9 +144,44 @@
             returnval['country'] = item.attributes.Country;
             return returnval;
             })
-          console.log(series);
+
           options.series[0].data = series;
-          var chart = new Highcharts.Chart('container', options);
+          var chart = new Highcharts.Chart('container', options, function(chart) {
+
+            console.log(chart.plotLeft);
+            console.log(chart.chartHeight);
+            chart.renderer.text(
+                'Low Exposure',
+                chart.plotLeft - 50,
+                chart.chartHeight * 0.75
+            ).attr({ zIndex: 5 })
+             .attr({ fill: 'red'})
+             .attr({ 'font-weight': 'bold'}).add()
+
+            chart.renderer.text(
+                'High Exposure',
+                chart.plotLeft - 50,
+                chart.chartHeight * 0.25
+            ).attr({ zIndex: 5 })
+             .attr({ fill: 'green'})
+             .attr({ 'font-weight': 'bold'}).add()
+
+            chart.renderer.text(
+                'Low Resilience',
+                chart.chartWidth * 0.75 - (chart.plotLeft/2),
+                chart.chartHeight - 10
+            ).attr({ zIndex: 5 })
+             .attr({ fill: 'red'})
+             .attr({ 'font-weight': 'bold'}).add()
+
+            chart.renderer.text(
+                'High Resilience',
+                chart.chartWidth * 0.25 - (chart.plotLeft/2),
+                chart.chartHeight - 10
+            ).attr({ zIndex: 5})
+             .attr({ fill: 'green'})
+             .attr({ 'font-weight': 'bold'}).add()
+          });
       });
   });
 

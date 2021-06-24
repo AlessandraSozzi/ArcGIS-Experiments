@@ -152,21 +152,24 @@
 
             console.log(chart.plotLeft);
             console.log(chart.chartHeight);
-            chart.renderer.text(
+            var text = chart.renderer.text(
                 'Low Exposure',
                 chart.plotLeft - 50,
                 chart.chartHeight * 0.75
-            ).attr({ zIndex: 5 })
-             .attr({ fill: 'green'})
-             .attr({ 'font-weight': 'bold'}).add()
+            ).attr({ zIndex: 5,
+                     rotation: -90,
+                     fill: 'green',
+                     'font-weight': 'bold'}).add()
+
 
             chart.renderer.text(
                 'High Exposure',
                 chart.plotLeft - 50,
                 chart.chartHeight * 0.25
-            ).attr({ zIndex: 5 })
-             .attr({ fill: 'red'})
-             .attr({ 'font-weight': 'bold'}).add()
+            ).attr({ zIndex: 5,
+                     rotation: -90,
+                     fill: 'red',
+                     'font-weight': 'bold'}).add()
 
             chart.renderer.text(
                 'Low Resilience',

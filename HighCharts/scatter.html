@@ -155,37 +155,41 @@
             var text = chart.renderer.text(
                 'Low Exposure',
                 chart.plotLeft - 50,
-                chart.chartHeight * 0.75
+                chart.chartHeight * 0.75 + (chart.plotTop)
             ).attr({ zIndex: 5,
                      rotation: -90,
                      fill: 'green',
-                     'font-weight': 'bold'}).add()
+                     'font-weight': 'bold',
+                     'font-size': '15px'}).add()
 
 
             chart.renderer.text(
                 'High Exposure',
                 chart.plotLeft - 50,
-                chart.chartHeight * 0.25
+                chart.chartHeight * 0.25 + (chart.plotTop)
             ).attr({ zIndex: 5,
                      rotation: -90,
                      fill: 'red',
-                     'font-weight': 'bold'}).add()
+                     'font-weight': 'bold',
+                     'font-size': '15px'}).add()
 
             chart.renderer.text(
                 'Low Resilience',
                 chart.chartWidth * 0.75 - (chart.plotLeft/2),
                 chart.chartHeight - 10
-            ).attr({ zIndex: 5 })
-             .attr({ fill: 'red'})
-             .attr({ 'font-weight': 'bold'}).add()
+            ).attr({ zIndex: 5,
+                     fill: 'red',
+                     'font-weight': 'bold',
+                     'font-size': '15px'}).add()
 
             chart.renderer.text(
                 'High Resilience',
                 chart.chartWidth * 0.25 - (chart.plotLeft/2),
                 chart.chartHeight - 10
-            ).attr({ zIndex: 5})
-             .attr({ fill: 'green'})
-             .attr({ 'font-weight': 'bold'}).add()
+            ).attr({ zIndex: 5,
+                     fill: 'green',
+                     'font-weight': 'bold',
+                     'font-size': '15px'}).add()
           });
       });
   });

@@ -1,4 +1,9 @@
 <style>
+
+body svg.highcharts-root {
+  background: #efefef;
+}
+
 .highcharts-figure, .highcharts-data-table table {
     min-width: 310px;
     max-width: 800px;
@@ -42,6 +47,49 @@
 }
 
 
+.highcharts-axis-line {
+    stroke-width: 1;
+    stroke-opacity: 0.5;
+    stroke: #6e6e6e;
+}
+
+.highcharts-grid-line {
+    stroke-width: 1;
+    stroke-opacity: 0.15;
+    stroke: #6e6e6e;
+}
+
+text {
+  font-family: "Avenir Next W01","Avenir Next W00","Avenir Next",Avenir,"Helvetica Neue",sans-serif;
+}
+p {
+  font-family: "Avenir Next W01","Avenir Next W00","Avenir Next",Avenir,"Helvetica Neue",sans-serif;
+  line-height: 1.5rem;
+  font-size: 14px;
+  word-wrap: break-word;
+  color: #4c4c4c;
+}
+
+a {
+  color: #0079c1;
+  text-decoration: none;
+}
+
+text.highcharts-axis-title {
+  font-weight: bold;
+}
+
+text.highcharts-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.highcharts-a11y-proxy-button {
+
+}
+
+
+
 
 </style>
 
@@ -60,7 +108,11 @@
 
 <figure class="highcharts-figure">
   <div id="container"></div>
+  <div style="margin-right:10px">
+  <p class="source" style="text-align:right"><em>Sources: <a href="https://di.unfccc.int/time_series">UNFCCC National Greenhouse Gas Emission Inventories</a>; <a href="https://pub.iges.or.jp/pub/iges-ndc-database">IGES Nationally Determined Contributions (NDC) Database</a>.</em></p>
+  </div>
 </figure>
+
 
 <script>
 

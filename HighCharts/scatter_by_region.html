@@ -81,17 +81,17 @@ a {
 }
 
 text.highcharts-axis-title {
-  font-weight: bold;
+  color: #4c4c4c;
+  font-weight: 600;
 }
 
-text.highcharts-title {
+/* text.highcharts-title {
   font-size: 18px;
-  font-weight: 700;
-}
+  color: #4c4c4c;
+  font-style: normal;
+  font-weight: 400;
+} */
 
-.highcharts-a11y-proxy-button {
-
-}
 
 
 
@@ -242,11 +242,23 @@ text.highcharts-title {
 
         legend: {
             enabled: true,
-            verticalAlign: 'top'
+            verticalAlign: 'top',
+            itemStyle: {
+              "color": "#4c4c4c",
+              "font-size": "11px",
+              "font-style": "normal",
+              "font-weight": 400
+            }
         },
 
         title: {
-            text: 'Resilience and Exposure to Low-Carbon Economy Transition'
+            text: 'Resilience and Exposure to Low-Carbon Economy Transition',
+            style: {
+              "color": "#4c4c4c",
+              "fontSize": "18px",
+              "font-style": "normal",
+              "font-weight": 600
+            }
         },
 
         xAxis: {
@@ -347,10 +359,10 @@ text.highcharts-title {
 
 
           options.series = returnval;
+
           var chart = new Highcharts.Chart('container', options, function(chart) {
 
-            console.log(chart.plotLeft);
-            console.log(chart.chartHeight);
+
             var text = chart.renderer.text(
                 'Low Exposure',
                 chart.plotLeft - 50,
@@ -358,7 +370,7 @@ text.highcharts-title {
             ).attr({ zIndex: 5,
                      rotation: -90,
                      fill: 'green',
-                     'font-weight': 'bold',
+                     'font-weight': 600,
                      'font-size': '15px'}).add()
 
 
@@ -369,7 +381,7 @@ text.highcharts-title {
             ).attr({ zIndex: 5,
                      rotation: -90,
                      fill: 'red',
-                     'font-weight': 'bold',
+                     'font-weight': 600,
                      'font-size': '15px'}).add()
 
             chart.renderer.text(
@@ -378,7 +390,7 @@ text.highcharts-title {
                 chart.chartHeight - 10
             ).attr({ zIndex: 5,
                      fill: 'red',
-                     'font-weight': 'bold',
+                     'font-weight': 600,
                      'font-size': '15px'}).add()
 
             chart.renderer.text(
@@ -387,7 +399,7 @@ text.highcharts-title {
                 chart.chartHeight - 10
             ).attr({ zIndex: 5,
                      fill: 'green',
-                     'font-weight': 'bold',
+                     'font-weight': 600,
                      'font-size': '15px'}).add()
           });
       });

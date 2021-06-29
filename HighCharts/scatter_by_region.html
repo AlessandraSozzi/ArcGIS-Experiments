@@ -93,6 +93,9 @@ text.highcharts-axis-title {
   font-weight: 400;
 } */
 
+.small-chart .labelAxis {
+	display: none;
+}
 
 
 
@@ -301,7 +304,10 @@ text.highcharts-axis-title {
                 '<tr><th>Resilience:</th><td>{point.x}</td></tr>' +
                 '<tr><th>Exposure:</th><td>{point.y}</td></tr>',
             footerFormat: '</table>',
-            followPointer: true
+            followPointer: true,
+            style: {
+               fontFamily: "Avenir Next"
+            }
         },
 
         plotOptions: {
@@ -315,7 +321,25 @@ text.highcharts-axis-title {
                 maxSize: 25
             }
         },
-          series: [{}]
+        series: [{}],
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 500
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                layout: 'horizontal',
+                verticalAlign: 'top',
+                itemMarginBottom: 0,
+              },
+              chart : {
+                className: 'small-chart'
+              }
+            }
+          }]
+      }
       };
 
       var url =  "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Indicator_12_dashboard/FeatureServer/0/query?where=1%3D1&outFields=Country,ISO2,Exposure,Resilience&outSR=4326&f=json";
@@ -381,7 +405,8 @@ text.highcharts-axis-title {
                      rotation: -90,
                      fill: 'green',
                      'font-weight': 600,
-                     'font-size': '15px'}).add()
+                     'font-size': '15px',
+                     class: 'labelAxis'}).add()
 
 
             chart.renderer.text(
@@ -392,25 +417,28 @@ text.highcharts-axis-title {
                      rotation: -90,
                      fill: 'red',
                      'font-weight': 600,
-                     'font-size': '15px'}).add()
+                     'font-size': '15px',
+                     class: 'labelAxis'}).add()
 
             chart.renderer.text(
                 'Low Resilience',
-                chart.chartWidth * 0.75 - (chart.plotLeft/2),
+                -(chart.plotLeft/2) + chart.chartWidth * 0.75,
                 chart.chartHeight - 10
             ).attr({ zIndex: 5,
                      fill: 'red',
                      'font-weight': 600,
-                     'font-size': '15px'}).add()
+                     'font-size': '15px',
+                     class: 'labelAxis'}).add()
 
             chart.renderer.text(
                 'High Resilience',
-                chart.chartWidth * 0.25 - (chart.plotLeft/2),
+                -(chart.plotLeft/2) + chart.chartWidth * 0.25,
                 chart.chartHeight - 10
             ).attr({ zIndex: 5,
                      fill: 'green',
                      'font-weight': 600,
-                     'font-size': '15px'}).add()
+                     'font-size': '15px',
+                     class: 'labelAxis'}).add()
           });
       });
   });

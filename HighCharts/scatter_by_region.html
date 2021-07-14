@@ -237,6 +237,15 @@ text.highcharts-axis-title {
             plotBorderWidth: 0.2,
             zoomType: 'xy',
             backgroundColor: '#eee',
+            events: {
+              render: function() {
+                var seriesElPos = this.seriesGroup.getBBox();
+
+                this.title.attr({
+                  x: seriesElPos.width / 2 + seriesElPos.x
+                });
+              }
+            }
 
         },
 

@@ -123,112 +123,10 @@ text.highcharts-axis-title {
 
 <script>
 
-  var continents = {
-      "AL":"Europe",
-      "DZ":"Africa",
-      "AO":"Africa",
-      "AR":"South America",
-      "AU":"Oceania",
-      "AT":"Europe",
-      "AZ":"Asia",
-      "BD":"Asia",
-      "BE":"Europe",
-      "BO":"South America",
-      "BW":"Africa",
-      "BR":"South America",
-      "BN":"Asia",
-      "BG":"Europe",
-      "KH":"Asia",
-      "CM":"Africa",
-      "CA":"North America",
-      "CL":"South America",
-      "CN":"Asia",
-      "CO":"South America",
-      "CG":"Africa",
-      "CR":"North America",
-      "HR":"Europe",
-      "CZ":"Europe",
-      "CI":"Africa",
-      "DK":"Europe",
-      "DO":"North America",
-      "EC":"South America",
-      "EG":"Africa",
-      "SV":"North America",
-      "GQ":"Africa",
-      "EE":"Europe",
-      "FI":"Europe",
-      "FR":"Europe",
-      "DE":"Europe",
-      "GH":"Africa",
-      "GR":"Europe",
-      "GT":"North America",
-      "GY":"South America",
-      "HN":"North America",
-      "HU":"Europe",
-      "IN":"Asia",
-      "ID":"Asia",
-      "IR":"Asia",
-      "IQ":"Asia",
-      "IE":"Europe",
-      "IL":"Asia",
-      "IT":"Europe",
-      "JM":"North America",
-      "JP":"Asia",
-      "JO":"Asia",
-      "KZ":"Asia",
-      "KE":"Africa",
-      "KR":"Asia",
-      "KW":"Asia",
-      "LV":"Europe",
-      "LY":"Africa",
-      "LT":"Europe",
-      "MG":"Africa",
-      "MW":"Africa",
-      "MY":"Asia",
-      "MU":"Africa",
-      "MX":"North America",
-      "MN":"Asia",
-      "MA":"Africa",
-      "MZ":"Africa",
-      "NZ":"Oceania",
-      "NI":"North America",
-      "NG":"Africa",
-      "NO":"Europe",
-      "OM":"Asia",
-      "PK":"Asia",
-      "PA":"North America",
-      "PY":"South America",
-      "PE":"South America",
-      "PH":"Asia",
-      "PL":"Europe",
-      "PT":"Europe",
-      "QA":"Asia",
-      "RU":"Europe",
-      "SA":"Asia",
-      "SG":"Asia",
-      "SK":"Europe",
-      "SI":"Europe",
-      "ZA":"Africa",
-      "ES":"Europe",
-      "SE":"Europe",
-      "CH":"Europe",
-      "TZ":"Africa",
-      "TH":"Asia",
-      "TN":"Africa",
-      "TR":"Asia",
-      "UG":"Africa",
-      "UA":"Europe",
-      "AE":"Asia",
-      "GB":"Europe",
-      "US":"North America",
-      "UY":"South America",
-      "VE":"South America",
-      "VN":"Asia"
-    }
-
-
-
   $(document).ready(function() {
+
+      var categories = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];
+
       var options = {
         chart: {
             type: 'column',
@@ -280,11 +178,9 @@ text.highcharts-axis-title {
         },
 
         xAxis: {
-            endOnTick: true,
-            // min: 0,
-            // max: 1.01,
-            // showLastLabel: false,
-            gridLineWidth: 1,
+          type: 'category',
+          categories: categories,
+          gridLineWidth: 1,
             // title: {
             //     text: 'Resilience'
             // },
@@ -310,11 +206,12 @@ text.highcharts-axis-title {
 
         tooltip: {
             useHTML: true,
-            headerFormat: '<table>',
-            pointFormat: '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
-                '<tr><th>Resilience:</th><td>{point.x}</td></tr>' +
-                '<tr><th>Exposure:</th><td>{point.y}</td></tr>',
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                         '<td style="padding:0"><b>{point.y:.1f} US$</b></td></tr>',
             footerFormat: '</table>',
+            shared: true,
+            useHTML: true,
             followPointer: true,
             style: {
                fontFamily: "Avenir Next"
@@ -327,9 +224,6 @@ text.highcharts-axis-title {
                     enabled: true,
                     format: '{point.name}'
                 },
-            },
-            bubble: {
-                maxSize: 25
             }
         },
         series: [{}],
@@ -356,14 +250,75 @@ text.highcharts-axis-title {
       var url =  "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Indicator_10_melted_new/FeatureServer/0/query?where=1%3D1&outFields=Country,ISO2,Indicator,Date,Value&f=json";
       $.getJSON(url,  function(data) {
 
+        var series = data.features.filter(function(item) {
+            return (
+              (item.attributes.Indicator === "Green Bond Issuances by Country") && (parseInt(item.attributes.Date) >= 2013)
+            )
+        })
 
-          series = data.features.filter((item) => {
-              item.attributes.Indicator == "Green Bond Issuances by Country"
+        series = series.sort(function(a, b) {
+          const dateA = parseInt(a.attributes.Date);
+          const dateB = parseInt(b.attributes.Date);
+          const valueA = a.attributes.Value;
+          const valueB = b.attributes.Value;
+
+          let comparison = 0;
+
+          // Sort by Date first and by value then
+          if (dateA > dateB) {
+            comparison = 1;
+          } else if (dateA < dateB) {
+            comparison = -1;
+          } else if (valueA > valueB) {
+            comparison = 1;
+          } else if (valueA < valueB) {
+            comparison = -1;
+          }
+          return comparison;
+
+        })
+
+        const returnval = [];
+
+        categories.forEach((category, i) => {
+
+          const lastFive = series.filter(function(item) {
+            return item.attributes.Date == category
+          }).slice(-5);
+
+          returnval.push(...lastFive);
+
+
+        });
+
+        let countries = new Set(returnval.map((item) => item.attributes.Country));
+        console.log(countries);
+
+
+
+
+
+        options.series = [...countries].map((country) => {
+
+          console.log(country);
+          let values = returnval.filter((item) => item.attributes.Country == country);
+          console.log(values);
+
+          let d = categories.map((category) => {
+
+            let filtered = values.filter((value) => value.attributes.Date == category)
+            let condition = filtered.length ? filtered[0].attributes.Value : Number.NaN
+            return condition
           })
 
-          console.log(series);
+          console.log(d);
 
-          options.series = series;
+          return {
+            'name': country,
+            'data': d
+          }
+
+        });
 
           var chart = new Highcharts.Chart('container', options, function(chart) {
 

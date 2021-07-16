@@ -233,6 +233,11 @@ text.highcharts-axis-title {
                 },
                 pointPadding: 0,
                 groupPadding: 0.15,
+                events: {
+                    legendItemClick: function(event) {
+                        event.preventDefault();
+                    }
+                }
             },
             column: {
               stacking: 'normal'
@@ -321,6 +326,20 @@ text.highcharts-axis-title {
               name: country,
               data: values,
               stack: 'country' + i%5,
+              states: {
+                hover: {
+                  enabled: false
+                },
+                inactive: {
+                  enabled: false
+                },
+                normal: {
+                  animation: false
+                },
+                select: {
+                  enabled: false
+                }
+              }
             }
 
           if (country in countries) {

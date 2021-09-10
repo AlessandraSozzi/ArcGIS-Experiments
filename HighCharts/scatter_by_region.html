@@ -131,33 +131,33 @@ text.highcharts-axis-title {
       "AL":"Europe",
       "DZ":"Africa",
       "AO":"Africa",
-      "AR":"South America",
+      "AR":"Americas",
       "AU":"Oceania",
       "AT":"Europe",
       "AZ":"Asia",
       "BD":"Asia",
       "BE":"Europe",
-      "BO":"South America",
+      "BO":"Americas",
       "BW":"Africa",
-      "BR":"South America",
+      "BR":"Americas",
       "BN":"Asia",
       "BG":"Europe",
       "KH":"Asia",
       "CM":"Africa",
-      "CA":"North America",
-      "CL":"South America",
+      "CA":"Americas",
+      "CL":"Americas",
       "CN":"Asia",
-      "CO":"South America",
+      "CO":"Americas",
       "CG":"Africa",
-      "CR":"North America",
+      "CR":"Americas",
       "HR":"Europe",
       "CZ":"Europe",
       "CI":"Africa",
       "DK":"Europe",
-      "DO":"North America",
-      "EC":"South America",
+      "DO":"Americas",
+      "EC":"Americas",
       "EG":"Africa",
-      "SV":"North America",
+      "SV":"Americas",
       "GQ":"Africa",
       "EE":"Europe",
       "FI":"Europe",
@@ -165,9 +165,9 @@ text.highcharts-axis-title {
       "DE":"Europe",
       "GH":"Africa",
       "GR":"Europe",
-      "GT":"North America",
-      "GY":"South America",
-      "HN":"North America",
+      "GT":"Americas",
+      "GY":"Americas",
+      "HN":"Americas",
       "HU":"Europe",
       "IN":"Asia",
       "ID":"Asia",
@@ -176,7 +176,7 @@ text.highcharts-axis-title {
       "IE":"Europe",
       "IL":"Asia",
       "IT":"Europe",
-      "JM":"North America",
+      "JM":"Americas",
       "JP":"Asia",
       "JO":"Asia",
       "KZ":"Asia",
@@ -190,19 +190,19 @@ text.highcharts-axis-title {
       "MW":"Africa",
       "MY":"Asia",
       "MU":"Africa",
-      "MX":"North America",
+      "MX":"Americas",
       "MN":"Asia",
       "MA":"Africa",
       "MZ":"Africa",
       "NZ":"Oceania",
-      "NI":"North America",
+      "NI":"Americas",
       "NG":"Africa",
       "NO":"Europe",
       "OM":"Asia",
       "PK":"Asia",
-      "PA":"North America",
-      "PY":"South America",
-      "PE":"South America",
+      "PA":"Americas",
+      "PY":"Americas",
+      "PE":"Americas",
       "PH":"Asia",
       "PL":"Europe",
       "PT":"Europe",
@@ -224,9 +224,9 @@ text.highcharts-axis-title {
       "UA":"Europe",
       "AE":"Asia",
       "GB":"Europe",
-      "US":"North America",
-      "UY":"South America",
-      "VE":"South America",
+      "US":"Americas",
+      "UY":"Americas",
+      "VE":"Americas",
       "VN":"Asia"
     }
 
@@ -373,31 +373,26 @@ text.highcharts-axis-title {
             {
               name: 'Africa',
               data: series.filter(item => item.continent == 'Africa'),
-              marker: { fillOpacity: 0.7 }
+              marker: { fillOpacity: 0.9 }
+            },
+            {
+              name: 'Americas',
+              data: series.filter(item => item.continent == 'Americas'),
+              marker: { fillOpacity: 0.9 }
             },
             {
               name: 'Asia',
               data: series.filter(item => item.continent == 'Asia'),
-              marker: { fillOpacity: 0.7 }
+              marker: { fillOpacity: 0.9 }
             },
             {
               name: 'Europe',
               data: series.filter(item => item.continent == 'Europe'),
-              marker: { fillOpacity: 0.7 }
-            },
-            {
-              name: 'North America',
-              data: series.filter(item => item.continent == 'North America'),
-              marker: { fillOpacity: 0.7 }
+              marker: { fillOpacity: 0.9 }
             },
             {
               name: 'Oceania',
               data: series.filter(item => item.continent == 'Oceania'),
-              marker: { fillOpacity: 0.7 }
-            },
-            {
-              name: 'South America',
-              data: series.filter(item => item.continent == 'South America'),
               marker: { fillOpacity: 0.7 }
             }];
 

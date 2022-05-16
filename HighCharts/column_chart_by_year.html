@@ -1,15 +1,29 @@
 <!-- /* Author CSF */ -->
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="code/highcharts.js"></script>
+<script src="code/highcharts-more.js"></script>
+<script src="code/modules/accessibility.js"></script>
+<script src="code/modules/data.js"></script>
+
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
 
 <link rel="stylesheet" type="text/css" href="Highcharts-IMF.css"/>
+
+<style>
+
+  .highcharts-background {
+    fill: #eee; }
+
+  .highcharts-plot-background {
+    fill: #eee; }
+
+  body {
+    background-color: #eee; }
+
+</style>
 
 <figure class="highcharts-figure">
   <div id="container"></div>
@@ -23,9 +37,20 @@
 
   $(document).ready(function() {
 
-      const categories = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020];
-      const palette = ['#004C97', '#009CDE', '#78BE20', '#F2A900', '#E35205',
-                       '#DA291C', '#8031A7', '#910048', '#00B0B9', '#5E8AB4'];
+      const categories = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
+      const palette = [
+                       '#255957', // UK #DD2D4A
+                       '#009CDE', // South Korea
+                       '#78BE20', // United States
+                       '#F2A900', // Norway
+                       '#E35205', // France
+                       '#DA291C', // Netherlands
+                       '#8031A7', // Sweden
+                       '#004C97', // Germany
+                       '#910048', // China
+                       '#00B0B9', // Mexico
+                       '#5E8AB4' // Belgium
+      ];
 
       var options = {
         chart: {
@@ -162,7 +187,7 @@
       }
       };
 
-      var url =  "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/green_bonds_issuance_by_country/FeatureServer/0/query?where=1%3D1&outFields=Amount,CountryofIncorporation,year&orderByFields=year,Amount&f=json";
+      var url =  "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/green_bonds_issuance_by_country_SM/FeatureServer/0/query?where=1%3D1&outFields=Amount,CountryofIncorporation,year&orderByFields=year,Amount&f=json";
       $.getJSON(url,  function(data) {
 
 
@@ -293,3 +318,4 @@
 
 
 </script>
+

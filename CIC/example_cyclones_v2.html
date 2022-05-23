@@ -43,9 +43,9 @@
             id: "6d42144ab32e4cddb3b159a34dfd1569"
           },
           //definitionExpression: "CNSTRCT_YR > 0",
-          title: "Systematic Ports",
+          title: "Systemic Ports",
           //minScale: 72223.819286,
-          effect: "bloom(0.2 0 0.5)",
+          effect: "bloom(0.2 0.1px 0.1)",
           renderer: portsRenderer,
         });
 
@@ -138,13 +138,13 @@
 
 
         view.ui.empty("top-left");
-        view.ui.add(titleDiv, "top-left");
-        view.ui.add(
-          new Home({
-            view: view
-          }),
-          "top-left"
-        );
+        // view.ui.add(titleDiv, "top-left");
+        // view.ui.add(
+        //   new Home({
+        //     view: view
+        //   }),
+        //   "top-left"
+        // );
         view.ui.add(
           new Legend({
             view: view
@@ -304,7 +304,7 @@
             // Update at 30fps
             setTimeout(() => {
               requestAnimationFrame(frame);
-            }, 2000 / 30);
+            }, 3000 / 30);
           };
 
           frame();
@@ -443,7 +443,7 @@
   <body>
     <div id="applicationDiv">
       <div id="viewDiv">
-        <div id="titleDiv" class="esri-widget">World Ports and Tropical Cyclones (1990-2022)</div>
+        <!-- <div id="titleDiv" class="esri-widget">World Ports and Tropical Cyclones (1990-2022)</div> -->
       </div>
       <div id="sliderContainer" class="esri-widget">
         <span id="sliderValue"></span>

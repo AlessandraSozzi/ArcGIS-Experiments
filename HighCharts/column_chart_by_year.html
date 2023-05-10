@@ -56,18 +56,7 @@
         chart: {
             type: 'column',
             plotBorderWidth: 0.2,
-            // zoomType: 'xy',
             backgroundColor: '#eee',
-            // events: {
-            //   render: function() {
-            //     var seriesElPos = this.seriesGroup.getBBox();
-            //
-            //     this.title.attr({
-            //       x: seriesElPos.width / 2 + seriesElPos.x
-            //     });
-            //   }
-            // }
-
         },
 
         credits: {
@@ -105,9 +94,6 @@
           type: 'category',
           categories: categories,
           gridLineWidth: 1,
-            // title: {
-            //     text: 'Resilience'
-            // },
             labels: {
                 format: '{value}'
             }
@@ -117,8 +103,6 @@
             startOnTick: false,
             endOnTick: true,
             min: 0,
-            // max: 1.05,
-            // showLastLabel: false,
             title: {
                 text: 'Billion US$'
             },
@@ -127,20 +111,6 @@
             },
             maxPadding: 0.2
         },
-
-        // tooltip: {
-        //     useHTML: true,
-        //     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        //     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-        //                  '<td style="padding:0"><b>{point.y:.1f} US$</b></td></tr>',
-        //     footerFormat: '</table>',
-        //     shared: true,
-        //     useHTML: true,
-        //     followPointer: true,
-        //     style: {
-        //        fontFamily: "Avenir Next"
-        //     }
-        // },
 
         tooltip: {
             formatter: function () {
@@ -193,47 +163,6 @@
 
         series = data.features;
         console.log(series);
-
-        // var series = data.features.filter(function(item) {
-        //     return (
-        //       (item.attributes.Indicator === "Green Bond Issuances by Country") && (parseInt(item.attributes.Date) >= 2013)
-        //     )
-        // })
-        //
-        // series = series.sort(function(a, b) {
-        //   const dateA = parseInt(a.attributes.Date);
-        //   const dateB = parseInt(b.attributes.Date);
-        //   const valueA = a.attributes.Value;
-        //   const valueB = b.attributes.Value;
-        //
-        //   let comparison = 0;
-        //
-        //   // Sort by Date first and by value then
-        //   if (dateA > dateB) {
-        //     comparison = 1;
-        //   } else if (dateA < dateB) {
-        //     comparison = -1;
-        //   } else if (valueA > valueB) {
-        //     comparison = 1;
-        //   } else if (valueA < valueB) {
-        //     comparison = -1;
-        //   }
-        //   return comparison;
-        //
-        // })
-
-        // const returnval = [];
-        //
-        // categories.forEach((category, i) => {
-        //
-        //   const lastFive = series.filter(function(item) {
-        //     return item.attributes.Date == category
-        //   }).slice(-5);
-        //
-        //   returnval.push(...lastFive);
-        //
-        //
-        // });
 
         countries = {};
 
@@ -288,27 +217,6 @@
         options.series = returnval;
 
 
-        // [...countries].map((country) => {
-        //
-        //   console.log(country);
-        //   let values = returnval.filter((item) => item.attributes.Country == country);
-        //   console.log(values);
-        //
-        //   let d = categories.map((category) => {
-        //
-        //     let filtered = values.filter((value) => value.attributes.Date == category)
-        //     let condition = filtered.length ? filtered[0].attributes.Value : Number.NaN
-        //     return condition
-        //   })
-        //
-        //   console.log(d);
-        //
-        //   return {
-        //     'name': country,
-        //     'data': d
-        //   }
-        //
-        // });
 
           var chart = new Highcharts.Chart('container', options, function(chart) {
 

@@ -1,9 +1,14 @@
 <!-- /* Author CSF */ -->
 
-<script src="code/highcharts.js"></script>
+<!-- <script src="code/highcharts.js"></script>
 <script src="code/highcharts-more.js"></script>
 <script src="code/modules/accessibility.js"></script>
-<script src="code/modules/data.js"></script>
+<script src="code/modules/data.js"></script> -->
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
 
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -37,7 +42,6 @@
 
   $(document).ready(function() {
 
-      const categories = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
       const palette = [
                        '#255957', // UK #DD2D4A
                        '#009CDE', // South Korea
@@ -90,14 +94,6 @@
             text: 'Top 5 countries by Year'
         },
 
-        xAxis: {
-          type: 'category',
-          categories: categories,
-          gridLineWidth: 1,
-            labels: {
-                format: '{value}'
-            }
-        },
 
         yAxis: {
             startOnTick: false,
@@ -165,6 +161,19 @@
         console.log(series);
 
         countries = {};
+
+        const categories = series.map(item => item.attributes.year).filter((value, index, array) => array.indexOf(value) === index);
+        categories.sort((a, b) => a - b);
+        console.log(categories);
+
+        options['xAxis'] = {
+          type: 'category',
+          categories: categories,
+          gridLineWidth: 1,
+            labels: {
+                format: '{value}'
+            }
+        };
 
         let returnval = series.map((item, i) => {
 
